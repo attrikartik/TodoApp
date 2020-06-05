@@ -1,0 +1,13 @@
+.Board{
+  display: flex;
+  flex-direction: row;
+  overflow-x: auto;
+  width: auto;
+  
+   
+   /* display: inline-block */
+}
+/* 
+.Container{
+    text-align: center;
+} */

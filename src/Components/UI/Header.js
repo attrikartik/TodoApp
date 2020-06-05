@@ -1,6 +1,6 @@
 import React from 'react';
 import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import InputBase from '@material-ui/core/InputBase';
@@ -79,7 +79,7 @@ export default function SearchAppBar() {
             <MenuIcon />
           </IconButton>
           <Typography className={classes.title} variant="h6" noWrap>
-            TODO-APP
+            Material-UI
           </Typography>
           <div className={classes.search}>
             <div className={classes.searchIcon}>

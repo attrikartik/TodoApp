@@ -1,11 +1,11 @@
 .Board{
-  /* display: flex;
+  display: flex;
   flex-direction: row;
   overflow-x: auto;
-  width: auto; */
+  width: auto;
   
    
-   display: inline-block
+   /* display: inline-block */
 }
  
 .Container{

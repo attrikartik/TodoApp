@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import style from './Board.module.css'
 import Columns from '../Columns/Columns'
 
-
+var COL_ID = 3
+var TASK_ID = 2
 class Board extends Component {
     state={
         columns:[
@@ -57,7 +58,7 @@ class Board extends Component {
         var columns = [...this.state.columns]
         var column = columns.filter(column=> column.colID === colId)
         const newTask={
-          id: 3,
+          id: ++TASK_ID,
           title: value
         }
         column[0].tasks.push(newTask)
@@ -65,11 +66,16 @@ class Board extends Component {
         this.setState({ columns: columns})
         
     }
-    // addList = () => {
-    //     const cols = [...this.state.columns]
-    //     cols.push(<Card tasks={this.state.tasks} title={(t)=>this.titleHandler(t)}/>)
-    //     this.setState({ columns: cols})
-    // }
+    addList = () => {
+        ++COL_ID
+        const newColumn = {
+           colID: COL_ID,
+           tasks:[]
+        }
+        const columns = [...this.state.columns]
+        columns.push(newColumn)
+        this.setState({columns: columns})
+    }
     render () {
         const columns = [...this.state.columns]
         return (

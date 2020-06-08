@@ -34,7 +34,7 @@ const TaskCard =(props)=> {
       <CardContent>
        <TaskForm  titleHandle={(value)=>props.title(colId,value)}/>
        {
-         tasks.map((t,index)=><p id={t.title} key={index}>{t.title}</p>)
+         tasks.length > 0 ? tasks.map((t,index)=><p id={t.title} key={index}>{t.title}</p>) : null
        } 
       </CardContent>
     </Card>

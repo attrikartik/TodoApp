@@ -1,14 +1,13 @@
 import React, { Component } from 'react'
-
+import style from './Task.module.css'
+import EditIcon from '@material-ui/icons/Create';
 class Task extends Component { 
-    state={
-        title: '',
-        priority:'',
-    }
     render () {
         return (
-            <div>
-              <p>{this.props.title} EDIT</p>
+            <div className={style.contaier}>
+              <div className={style.task}>
+              {this.props.title} <EditIcon/>
+              </div>       
             </div>
         )
     }

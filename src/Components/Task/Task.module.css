@@ -1,0 +1,13 @@
+.contaier{
+    background-color:white;
+    color: black;
+}
+
+.task{
+    width: 100px;
+    display: inline-block;
+    border: solid chocolate;
+    margin-top: 10px;
+    box-shadow: 1px 2px black;
+    padding: 5px;
+}

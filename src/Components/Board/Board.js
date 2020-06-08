@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
-import style from './Board.module.css'
 import Columns from '../Columns/Columns'
-
+import style from './Board.module.css'
+import Button from '@material-ui/core/Button';
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 var COL_ID = 3
 var TASK_ID = 2
 class Board extends Component {
@@ -54,7 +55,7 @@ class Board extends Component {
         ]
     } 
     
-    titleHandler = (colId,value) => {
+    addNewTask = (colId,value) => {
         var columns = [...this.state.columns]
         var column = columns.filter(column=> column.colID === colId)
         const newTask={
@@ -80,14 +81,16 @@ class Board extends Component {
         const columns = [...this.state.columns]
         return (
             <div  className={style.Container}>
+                <Button size="medium"  variant="contained" color="primary" onClick={this.addList}> 
+                  <AddCircleOutlineIcon/> New List
+                </Button>
                <div className={style.Board}>
                 {
                     columns.length > 0 ? columns.map(column => (
-                      <Columns key={column.colID} {...column} handleTitle={(colId,value) => this.titleHandler(colId,value)}/>
+                      <Columns key={column.colID} {...column} handleTitle={(colId,value) => this.addNewTask(colId,value)}/>
                     )): null
                 }
-               </div>                
-               <button onClick={this.addList}>Add New List</button>
+               </div>      
             </div>
         )
     }

@@ -5,6 +5,7 @@ import CardContent from '@material-ui/core/CardContent';
 import IconButton from '@material-ui/core/IconButton';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import TaskForm from '../TaskForm/TaskForm'
+import Task from '../Task/Task'
 import style from './Card.module.css'
 
 const TaskCard =(props)=> {
@@ -34,7 +35,7 @@ const TaskCard =(props)=> {
       <CardContent>
        <TaskForm  titleHandle={(value)=>props.title(colId,value)}/>
        {
-         tasks.length > 0 ? tasks.map((t,index)=><p id={t.title} key={index}>{t.title}</p>) : null
+         tasks.length > 0 ? tasks.map((t,index)=><Task id={t.title} key={index} title={t.title}/>) : null
        } 
       </CardContent>
     </Card>

@@ -58,7 +58,7 @@ class Board extends Component {
         column[0].tasks[id] = task
         const updateColID = this.state.columns.findIndex(col=>col.colID === editColId) 
         this.setState({
-            ...this.state.columns, [this.state.columns[updateColID]]:column
+            ...this.state.columns, [this.state.columns[updateColID]]:column, isEdit: !this.state.isEdit
         })
         alert('task updated')
     }

@@ -33,9 +33,17 @@ const TaskCard =(props)=> {
         title="TASK"
       />
       <CardContent>
-       <TaskForm  titleHandle={(value)=>props.title(colId,value)}/>
+       <TaskForm  
+          titleHandle={(value)=>props.title(colId,value)}
+        />
        {
-         tasks.length > 0 ? tasks.map((t,index)=><Task id={t.title} key={index} title={t.title}/>) : null
+         tasks.length > 0 ? tasks.map((t,index)=>
+              <Task 
+                id={t.id}
+                key={index}
+                title={t.title}
+                editHandle={()=>props.edit(t.id)}
+                />) : null
        } 
       </CardContent>
     </Card>

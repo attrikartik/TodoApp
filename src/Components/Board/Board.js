@@ -3,56 +3,16 @@ import Columns from '../Columns/Columns'
 import style from './Board.module.css'
 import Button from '@material-ui/core/Button';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
-var COL_ID = 3
-var TASK_ID = 2
+import Modal from '../UI/Modal/Modal'
+var COL_ID = 0
+var TASK_ID = 0
 class Board extends Component {
     state={
-        columns:[
-            {
-                colID: 1,
-                tasks: [
-                    {
-                        id: 1,
-                        title: 'task 1'
-                    },
-
-                    {
-                        id: 2,
-                        title: 'task 2'
-                    }
-                ]
-            },
-
-            {
-                colID: 2,
-                tasks: [
-                    {
-                        id: 1,
-                        title: 'task 3'
-                    },
-
-                    {
-                        id: 2,
-                        title: 'task 4'
-                    }
-                ]
-            },
-
-            {
-                colID: 3,
-                tasks: [
-                    {
-                        id: 1,
-                        title: 'task 4'
-                    },
-
-                    {
-                        id: 2,
-                        title: 'task 5'
-                    }
-                ]
-            }
-        ]
+        columns:[],
+        isEdit:false,
+        editTask: null,
+        editTaskId:null,
+        editColId:null
     } 
     
     addNewTask = (colId,value) => {
@@ -60,12 +20,15 @@ class Board extends Component {
         var column = columns.filter(column=> column.colID === colId)
         const newTask={
           id: ++TASK_ID,
-          title: value
+          title: value,
+          priority: '',
+          estimate: '',
+          status: '',
+          comments: ''
         }
         column[0].tasks.push(newTask)
 
-        this.setState({ columns: columns})
-        
+        this.setState({ columns: columns})        
     }
     addList = () => {
         ++COL_ID
@@ -77,17 +40,51 @@ class Board extends Component {
         columns.push(newColumn)
         this.setState({columns: columns})
     }
+
+    editHandler = (taskId,colID) => {
+        this.setState({ isEdit: !this.state.isEdit })
+        const column = [...this.state.columns].filter(column=> column.colID === colID)
+        const task =column[0].tasks.filter(task => task.id === taskId)
+        this.setState({editTask: task, editTaskId: taskId, editColId: colID})
+    }
+    toggleDrawer = () => {
+        this.setState({ isEdit: !this.state.isEdit })
+    }
+
+    updatetaskHandler = (task) => {
+        const { editTaskId, editColId } = this.state
+        const column = [...this.state.columns].filter(column=> column.colID === editColId)
+        const id = column[0].tasks.findIndex(task=> task.id === editTaskId)
+        column[0].tasks[id] = task
+        const updateColID = this.state.columns.findIndex(col=>col.colID === editColId) 
+        this.setState({
+            ...this.state.columns, [this.state.columns[updateColID]]:column
+        })
+        alert('task updated')
+    }
     render () {
-        const columns = [...this.state.columns]
+        const {columns,isEdit, editTask} = this.state
         return (
             <div  className={style.Container}>
+                {
+                    isEdit && <Modal 
+                                show={isEdit}
+                                toggleShow={this.toggleDrawer}
+                                task={editTask}
+                                updateTask={this.updatetaskHandler}
+                              />
+                }
                 <Button size="medium"  variant="contained" color="primary" onClick={this.addList}> 
                   <AddCircleOutlineIcon/> New List
                 </Button>
                <div className={style.Board}>
                 {
                     columns.length > 0 ? columns.map(column => (
-                      <Columns key={column.colID} {...column} handleTitle={(colId,value) => this.addNewTask(colId,value)}/>
+                      <Columns 
+                        key={column.colID}
+                        {...column}
+                        handleTitle={(colId,value) => this.addNewTask(colId,value)}
+                        handleEdit={(id,colID)=>this.editHandler(id,colID)}/>
                     )): null
                 }
                </div>      

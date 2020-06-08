@@ -6,7 +6,7 @@ class Task extends Component {
         return (
             <div className={style.contaier}>
               <div className={style.task}>
-              {this.props.title} <EditIcon/>
+              {this.props.title} <EditIcon onClick={this.props.editHandle}/>
               </div>       
             </div>
         )

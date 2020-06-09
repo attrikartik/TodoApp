@@ -7,19 +7,31 @@ class Columns extends Component {
 
     state = {
        startCol: null,
-       dropCol: null
+       dropCol: null,
+       dragOver: null
     }
 
     onDragStart = ( e, colID) => {
-        this.setState({ startCol: colID})
+        const idx = this.props.columns.findIndex(col=> col.colID === colID)
+        e.dataTransfer.setData('colIdx', idx)
     }
     onDragOver = (e) => {
         e.preventDefault();
     }
-    
-    onDrop = (e,colID) => {
-        this.setState({ dropCol: colID})
+    onDragEnter = ( e, colID) => {
+        this.setState({ dragOver: colID})
     }
+    OnDrop = (e,colID) => {
+        const cols = [ ...this.props.columns]
+        const droppedColIdx = cols.findIndex(col=> col.colID === colID)
+        const draggedColIdx = e.dataTransfer.getData("colIdx");
+        const tempCols = [...cols];
+    
+        tempCols[draggedColIdx] = cols[droppedColIdx];
+        tempCols[droppedColIdx] = cols[draggedColIdx];
+        this.props.setCols(tempCols)
+        this.setState({ dragOver: ''})
+      };
     render(){
         const { colID, tasks, handleTitle,handleEdit,deleteColumn,deleteTaskHandle } = {...this.props}
         return(
@@ -27,7 +39,8 @@ class Columns extends Component {
               draggable 
               onDragStart={(e)=>this.onDragStart(e,colID)}
               onDragOver={(e)=>this.onDragOver(e)}
-              onDrop={(e)=>this.onDrop(e,colID)}
+              onDragEnter={(e)=>this.onDragEnter(e,colID)}
+              onDrop={(e)=>this.OnDrop(e,colID)}
             >
                 {/* rendering task for each column */}
             <TaskCard 

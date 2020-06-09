@@ -119,6 +119,11 @@ class Board extends Component {
             ...this.state.columns, [this.state.columns[colID]]:column})
 
     }
+    /** function rendering columns when the are shuffled(kanban view) */
+    drag = (cols) => {
+        console.log(cols)
+        this.setState({ columns: cols})
+    }
     render () {
         /** getting properties from state */
         const {columns,isEdit, editTask} = this.state
@@ -144,6 +149,8 @@ class Board extends Component {
                     columns.length > 0 ? columns.map(column => (
                       <Columns 
                         key={column.colID}
+                        columns={columns}
+                        setCols={(cols)=>this.drag(cols)}
                         {...column}
                         handleTitle={(colId,value) => this.addNewTask(colId,value)}
                         handleEdit={(id,colID)=>this.editTaskHandler(id,colID)}

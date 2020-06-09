@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
 import { Button, ButtonGroup } from 'reactstrap';
 
+/** class RadioOptions 
+ *  it renders option to users 
+ */
 class RadioOptions extends Component {
     state={
         selected: ''
     }
     
+    /** function to handle user selection and setting state */
     handleSelect = (option) => {
         this.setState(prevState=>({
              selected: option
@@ -17,8 +21,8 @@ class RadioOptions extends Component {
     render() {
     return(
         <div>
-            <ButtonGroup>
-             {
+            <ButtonGroup >
+             {   // rendering option to users
                 this.props.options.map((option,index)=>(
                 <Button key={index} color="primary" onClick={() =>this.handleSelect(option)} active={this.state.selected === option}>{option}</Button>
                ))

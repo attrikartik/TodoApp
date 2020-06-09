@@ -8,16 +8,22 @@ import TaskForm from '../TaskForm/TaskForm'
 import Task from '../Task/Task'
 import style from './Card.module.css'
 
+/** component TaskCard
+ *  which renders each TaskCard to users
+ */
 const TaskCard =(props)=> {
 
+  /** setting initial state */
   const [colId, setColId] = useState(null)
   const [tasks,setTasks] = useState([])
   
+  /** hook with its dependencies for setting state  */
   useEffect(() => {
     setColId(props.colId)
     setTasks(props.tasks)
   },[props.colId, props.tasks])
 
+  /** function to alert user and then delete column */
   const handler = () => {
     alert('Are Sure You want to Delete It !!')
     props.deleteCol()

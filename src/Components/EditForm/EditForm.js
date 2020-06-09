@@ -19,10 +19,9 @@ class Register extends Component {
           comments: '',
         }
     })
-
+    /** setting state when component gets mounted */
     componentDidMount = () => {
         const { task } =  this.props
-        // console.log(task)
         this.setState({
           data: {
             title: task[0].title,
@@ -33,6 +32,7 @@ class Register extends Component {
            }
         })
     }
+    /** function set state with user input values */
     handleChange = (e) => {
         this.setState({
             data: {
@@ -41,9 +41,10 @@ class Register extends Component {
             }
         });
     }
-
+    /** function when form is submitted */
     handleSubmit = (e) => {
       e.preventDefault()
+      /** create new task with properties */
       const task = {
         title: this.state.data.title,
         priority: this.state.data.priority,
@@ -51,9 +52,11 @@ class Register extends Component {
         status: this.state.data.status,
         comments: this.state.data.comments
       }
+      /** update the task */
       this.props.update(task)
     }
-   
+    
+    /** function to set priority and status of function */
     setProp = (value,name) => {
       this.setState({
         data: {
@@ -77,7 +80,7 @@ class Register extends Component {
                 <FormGroup>
                     {/* <Label for="priority" style={{color:'#1B88BE'}}>Set Task Priority</Label> */}
                     <RadioOptions 
-                       title={'Priority'} 
+                       title='Task Priority'
                        name="priority" 
                        options={['Normal', 'Medium','High']} 
                        setProperty={(v)=>this.setProp(v,'priority')}
@@ -93,7 +96,7 @@ class Register extends Component {
                 <FormGroup>
                     {/* <Label for="status" style={{color:'#1B88BE'}}>Set Status</Label> */}
                     <RadioOptions 
-                        title={'Status'} 
+                        title='Task Status' 
                         name="status" 
                         options={['Un Touched', 'On Hold', 'In Progress', 'Partially Done', 'Done']}  
                         setProperty={(v)=>this.setProp(v,'status')}

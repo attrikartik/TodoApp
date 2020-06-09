@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
 import TaskCard from '../TaskCard/TaskCard'
+/** claas Column 
+ *  it displays current column with tasks
+ */
 class Columns extends Component {
 
     state = {
@@ -8,7 +11,6 @@ class Columns extends Component {
     }
 
     onDragStart = ( e, colID) => {
-        // console.log(colID)
         this.setState({ startCol: colID})
     }
     onDragOver = (e) => {
@@ -16,12 +18,10 @@ class Columns extends Component {
     }
     
     onDrop = (e,colID) => {
-        // console.log(colID)
         this.setState({ dropCol: colID})
     }
     render(){
         const { colID, tasks, handleTitle,handleEdit,deleteColumn,deleteTaskHandle } = {...this.props}
-        console.log(this.state)
         return(
             <div
               draggable 
@@ -29,6 +29,7 @@ class Columns extends Component {
               onDragOver={(e)=>this.onDragOver(e)}
               onDrop={(e)=>this.onDrop(e,colID)}
             >
+                {/* rendering task for each column */}
             <TaskCard 
                 colId={colID}
                 tasks={tasks}

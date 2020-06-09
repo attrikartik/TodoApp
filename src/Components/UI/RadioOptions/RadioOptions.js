@@ -6,11 +6,6 @@ class RadioOptions extends Component {
         selected: ''
     }
     
-    // componentDidMount(){
-    //     console.log(this.props.value)
-    //     // this.setState({ selected: this.props.value})
-    // }
-    
     handleSelect = (option) => {
         this.setState(prevState=>({
              selected: option
@@ -20,7 +15,6 @@ class RadioOptions extends Component {
     }
 
     render() {
-        console.log(this.props.value)
         return(
             <div>
               <ButtonGroup>
@@ -30,7 +24,7 @@ class RadioOptions extends Component {
                ))
             }
               </ButtonGroup>
-            <p>{this.props.title}: {this.state.selected}</p>
+            <p>{this.props.title}: {this.state.selected ? this.state.selected : this.props.value}</p>
      
     </div>
         )

@@ -65,7 +65,7 @@ class Register extends Component {
         const {data} = this.state;
         return (
             <Form onSubmit={this.handleSubmit}>
-                <Label for="editForm" style={{color:'#284756'}}><h3>Edit Task: {data.status}</h3></Label>
+                <Label for="editForm" style={{color:'#284756'}}><h3>Edit Task: {data.title}</h3></Label>
                 <FormGroup>
                     {/* <Label for="priority" style={{color:'#1B88BE'}}>Set Task Priority</Label> */}
                     <RadioOptions 

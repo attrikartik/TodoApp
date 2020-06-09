@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import Columns from '../Columns/Columns'
+import Columns from '../../Components/Columns/Columns'
 import style from './Board.module.css'
 import Button from '@material-ui/core/Button';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
-import Modal from '../UI/Modal/Modal'
+import Modal from '../../Components/UI/Modal/Modal'
 var COL_ID = 0
 var TASK_ID = 0
 class Board extends Component {
@@ -62,6 +62,18 @@ class Board extends Component {
         })
         alert('task updated')
     }
+    deletColumnHandler = ( colID ) => {
+        const columns = [...this.state.columns].filter(col=> col.colID !== colID)
+        this.setState({columns: columns})
+    }
+    deleteTaskHandler = (taskID,colID)=>{
+        const column = [...this.state.columns].filter(col=> col.colID === colID)
+        const tasks = column[0].tasks.filter(task=>task.id !== taskID)
+        column[0].tasks = tasks
+        this.setState({
+            ...this.state.columns, [this.state.columns[colID]]:column})
+
+    }
     render () {
         const {columns,isEdit, editTask} = this.state
         return (
@@ -84,7 +96,9 @@ class Board extends Component {
                         key={column.colID}
                         {...column}
                         handleTitle={(colId,value) => this.addNewTask(colId,value)}
-                        handleEdit={(id,colID)=>this.editHandler(id,colID)}/>
+                        handleEdit={(id,colID)=>this.editHandler(id,colID)}
+                        deleteColumn={(colID)=> this.deletColumnHandler(colID)}
+                        deleteTaskHandle={(taskID,colID) =>this.deleteTaskHandler(taskID,colID)}/>
                     )): null
                 }
                </div>      

@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import Todo from './Containers/Todo'
+import Todo from './HOC/Layout/Todo'
 function App() {
   return (
     <div className="App">

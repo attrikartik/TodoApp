@@ -3,7 +3,7 @@ import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import IconButton from '@material-ui/core/IconButton';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
+import DeleteIcon from '@material-ui/icons/Delete';
 import TaskForm from '../TaskForm/TaskForm'
 import Task from '../Task/Task'
 import style from './Card.module.css'
@@ -19,7 +19,8 @@ const TaskCard =(props)=> {
   },[props.colId, props.tasks])
 
   const handler = () => {
-    alert('Column Id ' +colId)
+    alert('Are Sure You want to Delete It !!')
+    props.deleteCol()
   }
  
   return (
@@ -27,7 +28,7 @@ const TaskCard =(props)=> {
       <CardHeader
         action={
           <IconButton aria-label="settings" onClick={handler} >
-            <MoreVertIcon/>
+            <DeleteIcon/>
           </IconButton>
         }
         title="TASK"
@@ -43,6 +44,7 @@ const TaskCard =(props)=> {
                 key={index}
                 title={t.title}
                 editHandle={()=>props.edit(t.id)}
+                deletTask={()=>props.taskDelete(t.id)}
                 />) : null
        } 
       </CardContent>

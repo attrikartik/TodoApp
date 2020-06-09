@@ -2,15 +2,41 @@ import React, { Component } from 'react'
 import TaskCard from '../TaskCard/TaskCard'
 class Columns extends Component {
 
+    state = {
+       startCol: null,
+       dropCol: null
+    }
+
+    onDragStart = ( e, colID) => {
+        // console.log(colID)
+        this.setState({ startCol: colID})
+    }
+    onDragOver = (e) => {
+        e.preventDefault();
+    }
+    
+    onDrop = (e,colID) => {
+        // console.log(colID)
+        this.setState({ dropCol: colID})
+    }
     render(){
-        const { colID, tasks, handleTitle,handleEdit } = {...this.props}
+        const { colID, tasks, handleTitle,handleEdit,deleteColumn,deleteTaskHandle } = {...this.props}
+        console.log(this.state)
         return(
-            <div>
-                <TaskCard 
-                  colId={colID}
-                  tasks={tasks}
-                  title={(colId,value)=> handleTitle (colId,value)}
-                  edit={(id)=>handleEdit(id,colID)}/>
+            <div
+              draggable 
+              onDragStart={(e)=>this.onDragStart(e,colID)}
+              onDragOver={(e)=>this.onDragOver(e)}
+              onDrop={(e)=>this.onDrop(e,colID)}
+            >
+            <TaskCard 
+                colId={colID}
+                tasks={tasks}
+                title={(colId,value)=> handleTitle (colId,value)}
+                edit={(id)=>handleEdit(id,colID)}
+                deleteCol={()=>deleteColumn(colID)}
+                taskDelete={(taskID)=>deleteTaskHandle(taskID,colID)}
+            />
             </div>
         )
     }

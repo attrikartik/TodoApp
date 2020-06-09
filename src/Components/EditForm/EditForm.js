@@ -21,6 +21,7 @@ class Register extends Component {
 
     componentDidMount = () => {
         const { task } =  this.props
+        // console.log(task)
         this.setState({
           data: {
             title: task[0].title,
@@ -64,14 +65,15 @@ class Register extends Component {
         const {data} = this.state;
         return (
             <Form onSubmit={this.handleSubmit}>
-                <Label for="editForm" style={{color:'#284756'}}><h3>Edit Task: {data.title}</h3></Label>
+                <Label for="editForm" style={{color:'#284756'}}><h3>Edit Task: {data.status}</h3></Label>
                 <FormGroup>
-                    <Label for="priority" style={{color:'#1B88BE'}}>Set Task Priority</Label>
+                    {/* <Label for="priority" style={{color:'#1B88BE'}}>Set Task Priority</Label> */}
                     <RadioOptions 
                        title={'Priority'} 
                        name="priority" 
                        options={['Normal', 'Medium','High']} 
                        setProperty={(v)=>this.setProp(v,'priority')}
+                       value={data.priority}
                     />
                 </FormGroup>
 
@@ -81,12 +83,13 @@ class Register extends Component {
                 </FormGroup>
 
                 <FormGroup>
-                    <Label for="status" style={{color:'#1B88BE'}}>Set Status</Label>
+                    {/* <Label for="status" style={{color:'#1B88BE'}}>Set Status</Label> */}
                     <RadioOptions 
                         title={'Status'} 
                         name="status" 
-                        options={['On Hold', 'In Progress', 'Partially Done', 'Done']}  
+                        options={['Un Touched', 'On Hold', 'In Progress', 'Partially Done', 'Done']}  
                         setProperty={(v)=>this.setProp(v,'status')}
+                        value={data.status}
                     />
                 </FormGroup>
 

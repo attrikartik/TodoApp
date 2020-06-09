@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import Header from '../Components/UI/Header/Header'
-import Board from '../Components/Board/Board'
+import Header from '../../Components/UI/Header/Header'
+import Board from '../../Containers/Board/Board'
 class Todo extends Component {
     render(){
         return(

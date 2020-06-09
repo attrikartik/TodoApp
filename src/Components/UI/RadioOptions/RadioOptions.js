@@ -3,25 +3,24 @@ import { Button, ButtonGroup } from 'reactstrap';
 
 class RadioOptions extends Component {
     state={
-        selected: null
+        selected: ''
     }
     
-    componentDidMount(){
-        // console.log(this.props)
-        // this.setState({ selected: this.props.value})
-    }
+    // componentDidMount(){
+    //     console.log(this.props.value)
+    //     // this.setState({ selected: this.props.value})
+    // }
     
     handleSelect = (option) => {
         this.setState(prevState=>({
              selected: option
-        }),()=>{
+        }), ()=>{
              this.props.setProperty(this.state.selected)
-        })
-       
+        })       
     }
 
-
     render() {
+        console.log(this.props.value)
         return(
             <div>
               <ButtonGroup>

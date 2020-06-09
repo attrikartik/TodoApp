@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Form, Input, Label, FormGroup, Button } from 'reactstrap';
 import RadioOptions from '../UI/RadioOptions/RadioOptions'
+import TextField from '@material-ui/core/TextField';
 class Register extends Component {
 
     constructor(props) {
@@ -65,7 +66,14 @@ class Register extends Component {
         const {data} = this.state;
         return (
             <Form onSubmit={this.handleSubmit}>
-                <Label for="editForm" style={{color:'#284756'}}><h3>Edit Task: {data.title}</h3></Label>
+                <Label for="editForm" style={{color:'#284756'}}> <h3>Edit Task !!</h3></Label>
+                <h3>
+                <TextField id={Math.random().toString()}
+                  name='title'
+                  label="Edit Task Label" color="secondary"
+                  onChange={this.handleChange}
+                  value={data.title}
+                /></h3>
                 <FormGroup>
                     {/* <Label for="priority" style={{color:'#1B88BE'}}>Set Task Priority</Label> */}
                     <RadioOptions 

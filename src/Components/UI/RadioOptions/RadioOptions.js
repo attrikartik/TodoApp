@@ -15,18 +15,18 @@ class RadioOptions extends Component {
     }
 
     render() {
-        return(
-            <div>
-              <ButtonGroup>
-            {
+    return(
+        <div>
+            <ButtonGroup>
+             {
                 this.props.options.map((option,index)=>(
                 <Button key={index} color="primary" onClick={() =>this.handleSelect(option)} active={this.state.selected === option}>{option}</Button>
                ))
-            }
-              </ButtonGroup>
+             }
+            </ButtonGroup>
             <p>{this.props.title}: {this.state.selected ? this.state.selected : this.props.value}</p>
      
-    </div>
+        </div>
         )
     }
 }

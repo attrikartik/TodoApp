@@ -10,10 +10,11 @@ class Task extends Component {
         this.props.deletTask()
     }
     render () {
+        const {title,editHandle,priority} = this.props
         return (
             <div className={style.container}>
               <div className={style.task}>
-              {this.props.title} <EditIcon onClick={this.props.editHandle}/> <DeleteIcon onClick={this.handleTask}/>
+              {title} <EditIcon onClick={editHandle}/> <DeleteIcon onClick={this.handleTask}/>
               </div>       
             </div>
         )

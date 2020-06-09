@@ -8,7 +8,14 @@ class RadioOptions extends Component {
     state={
         selected: ''
     }
+    componentDidMount() {
+        // this.initializeState()
+        // console.log('asas')
+    }
     
+    initializeState  = () => {
+        console.log(this.props)
+    }
     /** function to handle user selection and setting state */
     handleSelect = (option) => {
         this.setState(prevState=>({

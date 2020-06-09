@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import TaskCard from '../TaskCard/TaskCard'
 /** claas Column 
- *  it displays current column with tasks
+ *  it displays current column with tasks (also kanban view)
  */
 class Columns extends Component {
 
@@ -31,7 +31,7 @@ class Columns extends Component {
         tempCols[droppedColIdx] = cols[draggedColIdx];
         this.props.setCols(tempCols)
         this.setState({ dragOver: ''})
-      };
+    }
     render(){
         const { colID, tasks, handleTitle,handleEdit,deleteColumn,deleteTaskHandle } = {...this.props}
         return(

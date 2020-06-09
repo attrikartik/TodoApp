@@ -5,6 +5,7 @@ import CardContent from '@material-ui/core/CardContent';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import TaskForm from '../TaskForm/TaskForm'
+import ConfirmBox  from '../UI/ConfirmBox/ConfirmBox'
 import Task from '../Task/Task'
 import style from './Card.module.css'
 
@@ -16,7 +17,7 @@ const TaskCard =(props)=> {
   /** setting initial state */
   const [colId, setColId] = useState(null)
   const [tasks,setTasks] = useState([])
-  
+  const [showModal,setShowModal] = useState(false)
   /** hook with its dependencies for setting state  */
   useEffect(() => {
     setColId(props.colId)
@@ -25,12 +26,15 @@ const TaskCard =(props)=> {
 
   /** function to alert user and then delete column */
   const handler = () => {
-    alert('Are Sure You want to Delete It !!')
+    setShowModal(!showModal)
+  }
+  const handlerDelete = () => {
+    setShowModal(false)
     props.deleteCol()
   }
- 
   return (
     <Card className={style.root}>
+      { showModal ? <ConfirmBox show={showModal} deleteHandler={handlerDelete} cancel={handler}/>: null}
       <CardHeader
         action={
           <IconButton aria-label="settings" onClick={handler} >

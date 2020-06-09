@@ -44,6 +44,7 @@ class Register extends Component {
     /** function when form is submitted */
     handleSubmit = (e) => {
       e.preventDefault()
+      this.setState({ updated: true})
       /** create new task with properties */
       const task = {
         title: this.state.data.title,
@@ -65,11 +66,26 @@ class Register extends Component {
         }
       })
     }
+
+    cancelHandler = (e) => {
+        e.preventDefault()
+        /** set all state as empty */
+        this.setState({
+            data: {
+              title: '',
+              priority: '',
+              estimate: '',
+              status: '',
+              comments: ''
+             }
+        })
+        this.props.toggle()
+    }
     render() {
         const {data} = this.state;
         return (
-            <Form onSubmit={this.handleSubmit}>
-                <Label for="editForm" style={{color:'#284756'}}> <h3>Edit Task !!</h3></Label>
+            <Form>
+                <Label for="editForm" style={{color:'#284756'}}> <h3>Edit Task</h3></Label>
                 <h3>
                 <TextField id={Math.random().toString()}
                   name='title'
@@ -109,7 +125,8 @@ class Register extends Component {
                     <Input type="textarea" value={data.comments} name="comments" id="comments" onChange={this.handleChange}/>
                 </FormGroup>
 
-                <Button color="primary">Update</Button>
+                <Button style={{marginRight: '8px'}}color="primary" onClick={this.handleSubmit}>Update</Button>
+                <Button color="primary" onClick={this.cancelHandler}>Cancel</Button>
             </Form>
         );
     }

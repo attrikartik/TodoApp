@@ -121,7 +121,6 @@ class Board extends Component {
     }
     /** function rendering columns when the are shuffled(kanban view) */
     drag = (cols) => {
-        console.log(cols)
         this.setState({ columns: cols})
     }
     render () {

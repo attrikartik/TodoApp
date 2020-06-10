@@ -6,6 +6,8 @@ import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import Modal from '../../Components/UI/Modal/Modal'
 import Header from '../../Components/UI/Header/Header'
 import {NO_LIST_FOUND, NEW_LIST} from '../../Constants/Constants'
+import { store } from 'react-notifications-component';
+
 var COL_ID = 0
 var TASK_ID = 0
 
@@ -97,6 +99,19 @@ class Board extends Component {
             [this.state.columns[updateColID]]:column, 
             isEdit: !this.state.isEdit
         })
+        store.addNotification({
+            title: "Successfull!",
+            message: "Task Updated",
+            type: "success",
+            insert: "center",
+            container: "center",
+            animationIn: ["animated", "fadeIn"],
+            animationOut: ["animated", "fadeOut"],
+            dismiss: {
+              duration: 1000,
+              onScreen: true
+            }
+          });
     }
     /** function to delete full column list 
      * @param colID id for column whihch is to be deleted
@@ -106,6 +121,19 @@ class Board extends Component {
         const columns = [...this.state.columns].filter(col=> col.colID !== colID)
         /** updating state */
         this.setState({columns: columns})
+        store.addNotification({
+            title: "Successfull!",
+            message: "Task List Deleted",
+            type: "danger",
+            insert: "center",
+            container: "center",
+            animationIn: ["animated", "fadeIn"],
+            animationOut: ["animated", "fadeOut"],
+            dismiss: {
+              duration: 1000,
+              onScreen: true
+            }
+          });
     }
     /** function to delete particular task from column
      *  @param taskID id of task which is to be delted
@@ -121,6 +149,19 @@ class Board extends Component {
         /** updating the state */
         this.setState({
             ...this.state.columns, [this.state.columns[colID]]:column})
+            store.addNotification({
+                title: "Successfull!",
+                message: "Task Deleted",
+                type: "danger",
+                insert: "center",
+                container: "center",
+                animationIn: ["animated", "fadeIn"],
+                animationOut: ["animated", "fadeOut"],
+                dismiss: {
+                  duration: 1000,
+                  onScreen: true
+                }
+              });
 
     }
     /** function rendering columns when the are shuffled(kanban view) */

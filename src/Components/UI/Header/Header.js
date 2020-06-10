@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{ useState } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
@@ -7,13 +7,14 @@ import InputBase from '@material-ui/core/InputBase';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
-
+import {TITLE} from '../../../Constants/Constants'
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
+    marginBottom:'10px'
   },
   menuButton: {
-    marginRight: theme.spacing(2),
+    marginRight: theme.spacing(16),
   },
   title: {
     flexGrow: 1,
@@ -61,11 +62,18 @@ const useStyles = makeStyles((theme) => ({
       },
     },
   },
-}));
+}))
 
-export default function SearchAppBar() {
-  const classes = useStyles();
-
+export default function SearchAppBar(props) {
+  const classes = useStyles()
+  const [input, setInput] =  useState('')
+  
+  const submitHandler = (e) => {
+    e.preventDefault()
+    const value = input
+    setInput('')
+    props.search(value)
+  }
   return (
     <div className={classes.root}>
       <AppBar position="static">
@@ -79,20 +87,24 @@ export default function SearchAppBar() {
             <MenuIcon />
           </IconButton>
           <Typography className={classes.title} variant="h6" noWrap>
-            TODO APP
+            {TITLE}
           </Typography>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />
             </div>
-            <InputBase
-              placeholder="Search…"
-              classes={{
+            <form onSubmit={submitHandler}>
+              <InputBase
+               placeholder="Search…"
+               classes={{
                 root: classes.inputRoot,
                 input: classes.inputInput,
-              }}
-              inputProps={{ 'aria-label': 'search' }}
-            />
+               }}
+               value={input}
+               onChange={(e)=> setInput(e.target.value)}
+               inputProps={{ 'aria-label': 'search' }}
+              />
+            </form>
           </div>
         </Toolbar>
       </AppBar>

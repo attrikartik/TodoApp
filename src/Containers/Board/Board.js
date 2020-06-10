@@ -1,11 +1,14 @@
 import React, { Component } from 'react'
 import Columns from '../../Components/Columns/Columns'
 import style from './Board.module.css'
-import Button from '@material-ui/core/Button';
+import Button from '@material-ui/core/Button'
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import Modal from '../../Components/UI/Modal/Modal'
+import Header from '../../Components/UI/Header/Header'
+import {NO_LIST_FOUND, NEW_LIST} from '../../Constants/Constants'
 var COL_ID = 0
 var TASK_ID = 0
+
 /** class Board which maintains all the states and fucntionalities regarging TODOAPP */
 class Board extends Component {
     state={
@@ -78,23 +81,24 @@ class Board extends Component {
     /** function to update task with new properties 
      * @param task task with new properties
     */
-    updatetaskHandler = (task) => {
+    updateTaskHandler = (task) => {
         const { editTaskId, editColId } = this.state
         /** getting column  */
         const column = [...this.state.columns].filter(column=> column.colID === editColId)
         /** getting task id */
         const id = column[0].tasks.findIndex(task=> task.id === editTaskId)
-        /** update task wuth new new task properties */
+        /** update task with new new task properties */
         column[0].tasks[id] = task
         /** getting column id */
         const updateColID = this.state.columns.findIndex(col=>col.colID === editColId) 
-        /** updatin gthe stat */
+        /** updating the state */
         this.setState({
-            ...this.state.columns, [this.state.columns[updateColID]]:column, isEdit: !this.state.isEdit
+            ...this.state.columns,
+            [this.state.columns[updateColID]]:column, 
+            isEdit: !this.state.isEdit
         })
-        alert('task updated')
     }
-    /** functio to delete full column list 
+    /** function to delete full column list 
      * @param colID id for column whihch is to be deleted
      */
     deletColumnHandler = ( colID ) => {
@@ -123,26 +127,62 @@ class Board extends Component {
     drag = (cols) => {
         this.setState({ columns: cols})
     }
+
+    /** function to filter list based on tasks
+     * @param value filter tasks bases on this 
+     */
+    searchHandler = ( value ) => {
+        /** getting current state */
+        const columns = [...this.state.columns]   
+        /** new arrays to store filtered results*/
+        var newTasks = []
+        var newColumns = []
+
+        /** traversing current state columns and it's tasks */
+        columns.forEach(col => {
+            newTasks=[]
+            col.tasks.forEach(task=>{
+                /** if current tasks title match give input store in new array */
+                if(task.title === value){
+                   newTasks.push(task)
+                }
+            })
+            /** with new tasks create new column */
+            if( newTasks.length > 0)
+            {
+                const newCol = {
+                    colID: col.colID,
+                    tasks: newTasks
+                }
+                /** store new column in new array */
+                newColumns.push(newCol)
+            }         
+        })
+        /** updating the state with new filtered columns and it's tasks */
+        this.setState({ columns: newColumns})
+    }
+
     render () {
         /** getting properties from state */
         const {columns,isEdit, editTask} = this.state
         return (
             <div  className={style.Container}>
+                <Header search={this.searchHandler}/>
                  {/* render modal of is task is being edited */}
                 {
-                    isEdit && <Modal 
+                    isEdit  && <Modal 
                                 show={isEdit}
                                 toggleShow={this.toggleDrawer}
                                 task={editTask}
-                                updateTask={this.updatetaskHandler}
-                              />
+                                updateTask={this.updateTaskHandler}
+                            />
                 }
                 {/* buuton to add new column */}
                 <Button size="medium"  variant="contained" color="primary" onClick={this.addList}> 
-                  <AddCircleOutlineIcon/> New List
+                  <AddCircleOutlineIcon/> {NEW_LIST}
                 </Button>
                 {/* rendering columns */}
-               <div className={style.Board}>
+                <div className={style.Board}>
                 {
                     // passing props to single column
                     columns.length > 0 ? columns.map(column => (
@@ -155,9 +195,9 @@ class Board extends Component {
                         handleEdit={(id,colID)=>this.editTaskHandler(id,colID)}
                         deleteColumn={(colID)=> this.deletColumnHandler(colID)}
                         deleteTaskHandle={(taskID,colID) =>this.deleteTaskHandler(taskID,colID)}/>
-                    )): null
+                    )): <h5 style={{color:'red'}}>{NO_LIST_FOUND}</h5>
                 }
-               </div>      
+                </div>      
             </div>
         )
     }

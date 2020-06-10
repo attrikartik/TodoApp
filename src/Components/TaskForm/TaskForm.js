@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import TextField from '@material-ui/core/TextField';
-
+import {ERROR_TASK} from '../../Constants/Constants'
 /** class TaskForm 
  *  which renders form with single input to create new task
  */
@@ -32,7 +32,7 @@ class TaskForm extends Component {
                   value={this.state.title}
                 />
                 {/* if error hen display it */}
-                { this.state.error && <p style={{color:'red'}}>Please add task</p>}
+                { this.state.error && <p style={{color:'red'}}>{ERROR_TASK}</p>}
             </form>        
         )
     }

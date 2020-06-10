@@ -1,44 +1,33 @@
 import React, { Component } from 'react';
-import { Form, Input, Label, FormGroup, Button } from 'reactstrap';
+import { Form, Input, Label, FormGroup, Button } from 'reactstrap'
 import RadioOptions from '../UI/RadioOptions/RadioOptions'
-import TextField from '@material-ui/core/TextField';
+import TextField from '@material-ui/core/TextField'
+import { EDIT_TASK, ESTIMATE, CANCEL, UPDATE, COMMENTS, PRIORITY_OPTIONS, STATUS_OPTIONS} from '../../Constants/Constants'
+
 class Register extends Component {
 
-    constructor(props) {
-        super(props);
-
-        this.state = this.getInitialState();
-    }
-
-    getInitialState = () => ({
-        data: {
-          title:'',
-          priority:'',
-          estimate: '',
-          status:'',
-          comments: '',
+    state={
+            title:'',
+            priority:'',
+            estimate: '',
+            status:'',
+            comments: '',
         }
-    })
-    /** setting state when component gets mounted */
     componentDidMount = () => {
         const { task } =  this.props
         this.setState({
-          data: {
             title: task[0].title,
             priority: task[0].priority,
             estimate: task[0].estimate,
             status: task[0].status,
             comments: task[0].comments
-           }
         })
     }
     /** function set state with user input values */
     handleChange = (e) => {
         this.setState({
-            data: {
-                ...this.state.data,
+                ...this.state,
                 [e.target.name]: e.target.value
-            }
         });
     }
     /** function when form is submitted */
@@ -47,11 +36,11 @@ class Register extends Component {
       this.setState({ updated: true})
       /** create new task with properties */
       const task = {
-        title: this.state.data.title,
-        priority: this.state.data.priority,
-        estimate: this.state.data.estimate,
-        status: this.state.data.status,
-        comments: this.state.data.comments
+        title: this.state.title,
+        priority: this.state.priority,
+        estimate: this.state.estimate,
+        status: this.state.status,
+        comments: this.state.comments
       }
       /** update the task */
       this.props.update(task)
@@ -59,54 +48,50 @@ class Register extends Component {
     
     /** function to set priority and status of function */
     setProp = (value,name) => {
-      this.setState({
-        data: {
-            ...this.state.data,
+        this.setState({
+            ...this.state,
             [name]: value
-        }
-      })
+        })
     }
 
     cancelHandler = (e) => {
         e.preventDefault()
         /** set all state as empty */
         this.setState({
-            data: {
               title: '',
               priority: '',
               estimate: '',
               status: '',
               comments: ''
-             }
         })
         this.props.toggle()
     }
     render() {
-        const {data} = this.state;
+        const {title,priority,status,estimate,comments} = this.state
         return (
             <Form>
-                <Label for="editForm" style={{color:'#284756'}}> <h3>Edit Task</h3></Label>
+                <Label for="editForm" style={{color:'#284756'}}> <h3>{EDIT_TASK}</h3></Label>
                 <h3>
                 <TextField id={Math.random().toString()}
                   name='title'
                   label="Edit Task Label" color="secondary"
                   onChange={this.handleChange}
-                  value={data.title}
+                  value={title}
                 /></h3>
                 <FormGroup>
                     {/* <Label for="priority" style={{color:'#1B88BE'}}>Set Task Priority</Label> */}
                     <RadioOptions 
                        title='Task Priority'
                        name="priority" 
-                       options={['Normal', 'Medium','High']} 
-                       setProperty={(v)=>this.setProp(v,'priority')}
-                       value={data.priority}
+                       options={PRIORITY_OPTIONS} 
+                       value={priority ? priority : 'null'}
+                       setProperty={(v)=>this.setProp(v,'priority')}                       
                     />
                 </FormGroup>
 
                 <FormGroup>
-                    <Label for="estimate" style={{color:'#1B88BE'}}>Estimate (in Hrs)</Label>
-                    <Input id="estimate" value={data.estimate} name="estimate" onChange={this.handleChange} />
+                    <Label for="estimate" style={{color:'#1B88BE'}}>{ESTIMATE}</Label>
+                    <Input type='number' id="estimate" value={estimate} name="estimate" onChange={this.handleChange} />
                 </FormGroup>
 
                 <FormGroup>
@@ -114,19 +99,19 @@ class Register extends Component {
                     <RadioOptions 
                         title='Task Status' 
                         name="status" 
-                        options={['Un Touched', 'On Hold', 'In Progress', 'Partially Done', 'Done']}  
+                        options={STATUS_OPTIONS}  
                         setProperty={(v)=>this.setProp(v,'status')}
-                        value={data.status}
+                        value={status}
                     />
                 </FormGroup>
 
                 <FormGroup>
-                    <Label for="comments" style={{color:'#1B88BE'}}>Comments</Label>
-                    <Input type="textarea" value={data.comments} name="comments" id="comments" onChange={this.handleChange}/>
+                    <Label for="comments" style={{color:'#1B88BE'}}>{COMMENTS}</Label>
+                    <Input type="textarea" value={comments} name="comments" id="comments" onChange={this.handleChange}/>
                 </FormGroup>
 
-                <Button style={{marginRight: '8px'}}color="primary" onClick={this.handleSubmit}>Update</Button>
-                <Button color="primary" onClick={this.cancelHandler}>Cancel</Button>
+                <Button style={{marginRight: '8px'}}color="primary" onClick={this.handleSubmit}>{UPDATE}</Button>
+                <Button color="primary" onClick={this.cancelHandler}>{CANCEL}</Button>
             </Form>
         );
     }

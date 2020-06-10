@@ -5,38 +5,24 @@ import { Button, ButtonGroup } from 'reactstrap';
  *  it renders option to users 
  */
 class RadioOptions extends Component {
-    state={
-        selected: ''
-    }
-    componentDidMount() {
-     this.initializeState()
-    }
-    
-    initializeState  = () => {
-        // console.log(this.props)
-    }
-    /** function to handle user selection and setting state */
-    handleSelect = (option) => {
-        this.setState(prevState=>({
-             selected: option
-        }), ()=>{
-             this.props.setProperty(this.state.selected)
-        })       
+
+    handleSelect = (option) => {     
+             this.props.setProperty(option)     
     }
 
     render() {
+        const buts =  this.props.options.map((option,index)=>{
+                        if(option === this.props.value){
+                          return   <Button style={{margin:'3px'}}key={index} color="secondary" onClick={() =>this.handleSelect(option)}>{option}</Button>
+
+                        }
+                        return <Button style={{margin:'3px'}}key={index} color="primary" onClick={() =>this.handleSelect(option)}>{option}</Button>
+                    })
     return(
         <div>
-            {/* {console.log(this.props)} */}
-            <ButtonGroup >
-             {   // rendering option to users
-                this.props.options.map((option,index)=>(
-                <Button style={{margin:'3px'}}key={index} color="primary" onClick={() =>this.handleSelect(option)} active={this.state.selected === option}>{option}</Button>
-               ))
-             }
-            </ButtonGroup>
-            {/* <p>{this.props.title}: {this.state.selected ? this.state.selected : this.props.value}</p> */}
-     
+            <ButtonGroup>
+             {buts}
+            </ButtonGroup>    
         </div>
         )
     }

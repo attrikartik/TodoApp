@@ -33,7 +33,6 @@ class Register extends Component {
     /** function when form is submitted */
     handleSubmit = (e) => {
       e.preventDefault()
-      this.setState({ updated: true})
       /** create new task with properties */
       const task = {
         title: this.state.title,
@@ -84,7 +83,7 @@ class Register extends Component {
                        title='Task Priority'
                        name="priority" 
                        options={PRIORITY_OPTIONS} 
-                       value={priority ? priority : 'null'}
+                       value={priority }
                        setProperty={(v)=>this.setProp(v,'priority')}                       
                     />
                 </FormGroup>

@@ -2,9 +2,14 @@ import React, { Component } from 'react';
 import { Form, Input, Label, FormGroup, Button } from 'reactstrap'
 import RadioOptions from '../UI/RadioOptions/RadioOptions'
 import TextField from '@material-ui/core/TextField'
-import { EDIT_TASK, ESTIMATE, CANCEL, UPDATE, COMMENTS, PRIORITY_OPTIONS, STATUS_OPTIONS} from '../../Constants/Constants'
+import  { EDIT_TASK, ESTIMATE, CANCEL,
+          UPDATE, COMMENTS, PRIORITY_OPTIONS,
+          STATUS_OPTIONS, SET_PRIORITY, SET_STATUS } from '../../Constants/Constants'
 
-class Register extends Component {
+/** class EditForm
+ *  which displays form to user with task properties
+  */
+class EditForm extends Component {
 
     state={
             title:'',
@@ -15,6 +20,7 @@ class Register extends Component {
         }
     componentDidMount = () => {
         const { taskEdit } =  this.props
+        /** setting state with incoming task properties */
         this.setState({
             title: taskEdit.title,
             priority: taskEdit.priority,
@@ -24,7 +30,7 @@ class Register extends Component {
         })
     }
    
-    /** function set state with user input values */
+    /** function to set state with user input values */
     handleChange = (e) => {
         this.setState({
                 ...this.state,
@@ -47,14 +53,14 @@ class Register extends Component {
       this.props.update(task)
     }
     
-    /** function to set priority and status of function */
+    /** function to set priority and status of task */
     setProp = (value,name) => {
         this.setState({
             ...this.state,
             [name]: value
         })
     }
-
+    /** function to cancel the editing of task */
     cancelHandler = (e) => {
         e.preventDefault()
         /** set all state as empty */
@@ -65,6 +71,7 @@ class Register extends Component {
               status: '',
               comments: ''
         })
+        /** toggle the side drawer */
         this.props.toggle()
     }
     render() {
@@ -80,7 +87,7 @@ class Register extends Component {
                   value={title}
                 /></h3>
                 <FormGroup>
-                    {/* <Label for="priority" style={{color:'#1B88BE'}}>Set Task Priority</Label> */}
+                    <Label for="priority" style={{color:'#1B88BE'}}>{SET_PRIORITY}</Label>
                     <RadioOptions 
                        title='Task Priority'
                        name="priority" 
@@ -96,7 +103,7 @@ class Register extends Component {
                 </FormGroup>
 
                 <FormGroup>
-                    {/* <Label for="status" style={{color:'#1B88BE'}}>Set Status</Label> */}
+                    <Label for="status" style={{color:'#1B88BE'}}>{SET_STATUS}</Label>
                     <RadioOptions 
                         title='Task Status' 
                         name="status" 
@@ -118,4 +125,4 @@ class Register extends Component {
     }
 }
 
-export default Register;
+export default EditForm

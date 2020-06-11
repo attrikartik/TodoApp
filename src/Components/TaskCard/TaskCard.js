@@ -29,6 +29,7 @@ const TaskCard =(props)=> {
   const handler = () => {
     setShowModal(!showModal)
   }
+  /**toggle side drawer and call delete function*/
   const handlerDelete = () => {
     setShowModal(false)
     props.deleteCol()
@@ -45,19 +46,19 @@ const TaskCard =(props)=> {
         title="TASK"
       />
       <CardContent>
-       <TaskForm  
+        <TaskForm  
           titleHandle={(value)=>props.title(colId,value)}
         />
-       {
+        {
          tasks.length > 0 ? tasks.map((t,index)=>
-              <Task 
-                id={t.id}
-                key={index}
-                title={t.title}
-                editHandle={()=>props.edit(t.id)}
-                deletTask={()=>props.taskDelete(t.id)}
-                />) : null
-       } 
+            <Task 
+              id={t.id}
+              key={index}
+              title={t.title}
+              editHandle={()=>props.edit(t.id)}
+              deletTask={()=>props.taskDelete(t.id)}
+              />) : null
+        } 
       </CardContent>
     </Card>
   );

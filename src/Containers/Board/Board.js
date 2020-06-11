@@ -123,7 +123,7 @@ class Board extends Component {
             animationIn: ["animated", "fadeIn"],
             animationOut: ["animated", "fadeOut"],
             dismiss: {
-              duration: 1000,
+              duration: 500,
               onScreen: true
             }
           });
@@ -149,7 +149,7 @@ class Board extends Component {
             animationIn: ["animated", "fadeIn"],
             animationOut: ["animated", "fadeOut"],
             dismiss: {
-              duration: 1000,
+              duration: 500,
               onScreen: true
             }
         });
@@ -181,7 +181,7 @@ class Board extends Component {
             animationIn: ["animated", "fadeIn"],
             animationOut: ["animated", "fadeOut"],
             dismiss: {
-              duration: 1000,
+              duration: 500,
               onScreen: true
             }
         })
@@ -206,7 +206,7 @@ class Board extends Component {
                 animationIn: ["animated", "fadeIn"],
                 animationOut: ["animated", "fadeOut"],
                 dismiss: {
-                  duration: 1000,
+                  duration: 500,
                   onScreen: true
                 }
             })
@@ -246,18 +246,18 @@ class Board extends Component {
 
              /**  successful search notification */
             store.addNotification({
-                title: "Successfull!",
-                message: "Data Found",
-                type: "success",
-                insert: "center",
-                container: "center",
-                animationIn: ["animated", "fadeIn"],
-                animationOut: ["animated", "fadeOut"],
-                dismiss: {
-                  duration: 1000,
-                  onScreen: true
-                }
-            })
+                    title: "Successfull!",
+                    message: "Data Found",
+                    type: "success",
+                    insert: "center",
+                    container: "center",
+                    animationIn: ["animated", "fadeIn"],
+                    animationOut: ["animated", "fadeOut"],
+                    dismiss: {
+                      duration: 500,
+                      onScreen: true
+                    }
+                })
             }else{
                 /**no search data found  notification */
                 store.addNotification({
@@ -269,7 +269,7 @@ class Board extends Component {
                     animationIn: ["animated", "fadeIn"],
                     animationOut: ["animated", "fadeOut"],
                     dismiss: {
-                      duration: 1000,
+                      duration: 500,
                       onScreen: true
                     }
                 })

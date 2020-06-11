@@ -26,7 +26,7 @@ export default function SwipeableTemporaryDrawer(props) {
             onClose={toggleDrawer(false)}
             onOpen={toggleDrawer(true)}
           >
-           <EditForm task={props.task} update={props.updateTask} toggle={props.toggleShow}/>
+           <EditForm taskEdit={props.taskToBeEdit} update={props.updateTask} toggle={props.toggleShow}/>
           </SwipeableDrawer>
         </React.Fragment>
       

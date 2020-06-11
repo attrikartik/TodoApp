@@ -29,6 +29,7 @@ class Board extends Component {
         /** getting current list of columns */
         var columns = [...this.state.columns]
         var column = columns.filter(column=> column.colID === colId)
+
         /** create new task */
         const newTask={
           id: ++TASK_ID,
@@ -47,13 +48,16 @@ class Board extends Component {
 
     /** add new list column to main Board */
     addList = () => {
+
         /** increment colID for new column */
         ++COL_ID
+
         /** create new column */
         const newColumn = {
            colID: COL_ID,
            tasks:[]
         }
+
         /** getting current columns and new column */
         const columns = [...this.state.columns]
         columns.push(newColumn)
@@ -66,13 +70,16 @@ class Board extends Component {
      * @param colID  id of column where task resides
     */
     editTaskHandler = (taskId,colID) => {
-        this.setState({ isEdit: !this.state.isEdit })
+        
+        this.setState({ isEdit: !this.state.isEdit , editTask: null})
         /** getting column in which task is there */
         const column = [...this.state.columns].filter(column=> column.colID === colID)
+
         /** get task to be updated */
         const task =column[0].tasks.filter(task => task.id === taskId)
+
         /** update the state */
-        this.setState({editTask: task, editTaskId: taskId, editColId: colID})
+        this.setState({editTask: task[0], editTaskId: taskId, editColId: colID})
     }
 
     /** function to toggle side drawer */
@@ -85,20 +92,28 @@ class Board extends Component {
     */
     updateTaskHandler = (task) => {
         const { editTaskId, editColId } = this.state
+
         /** getting column  */
         const column = [...this.state.columns].filter(column=> column.colID === editColId)
+
         /** getting task id */
         const id = column[0].tasks.findIndex(task=> task.id === editTaskId)
+
         /** update task with new new task properties */
         column[0].tasks[id] = task
+
         /** getting column id */
         const updateColID = this.state.columns.findIndex(col=>col.colID === editColId) 
+
         /** updating the state */
         this.setState({
             ...this.state.columns,
             [this.state.columns[updateColID]]:column, 
-            isEdit: !this.state.isEdit
+            isEdit: !this.state.isEdit,
+            editTask:null
         })
+
+        /** successfull update notification */
         store.addNotification({
             title: "Successfull!",
             message: "Task Updated",
@@ -117,10 +132,14 @@ class Board extends Component {
      * @param colID id for column whihch is to be deleted
      */
     deletColumnHandler = ( colID ) => {
+
         /** deleting column */
         const columns = [...this.state.columns].filter(col=> col.colID !== colID)
+
         /** updating state */
         this.setState({columns: columns})
+
+        /** successfull delete notification */
         store.addNotification({
             title: "Successfull!",
             message: "Task List Deleted",
@@ -133,7 +152,7 @@ class Board extends Component {
               duration: 1000,
               onScreen: true
             }
-          });
+        });
     }
     /** function to delete particular task from column
      *  @param taskID id of task which is to be delted
@@ -142,27 +161,30 @@ class Board extends Component {
     deleteTaskHandler = (taskID,colID)=>{
         /** getting column */
         const column = [...this.state.columns].filter(col=> col.colID === colID)
+
         /** deleting task */
         const tasks = column[0].tasks.filter(task=>task.id !== taskID)
+
         /** updating column  */
         column[0].tasks = tasks
-        /** updating the state */
-        this.setState({
-            ...this.state.columns, [this.state.columns[colID]]:column})
-            store.addNotification({
-                title: "Successfull!",
-                message: "Task Deleted",
-                type: "danger",
-                insert: "center",
-                container: "center",
-                animationIn: ["animated", "fadeIn"],
-                animationOut: ["animated", "fadeOut"],
-                dismiss: {
-                  duration: 1000,
-                  onScreen: true
-                }
-              });
 
+        /** updating the state */
+        this.setState({...this.state.columns, [this.state.columns[colID]]:column})
+
+        /**successfull deletion notification */
+        store.addNotification({
+            title: "Successfull!",
+            message: "Task Deleted",
+            type: "danger",
+            insert: "center",
+            container: "center",
+            animationIn: ["animated", "fadeIn"],
+            animationOut: ["animated", "fadeOut"],
+            dismiss: {
+              duration: 1000,
+              onScreen: true
+            }
+        })
     }
     /** function rendering columns when the are shuffled(kanban view) */
     drag = (cols) => {
@@ -173,8 +195,25 @@ class Board extends Component {
      * @param value filter tasks bases on this 
      */
     searchHandler = ( value ) => {
+        if( value === ''){
+            /**  empty search notification */
+            store.addNotification({
+                title: "Enter Valid Value!",
+                message: "Empty Field",
+                type: "danger",
+                insert: "center",
+                container: "center",
+                animationIn: ["animated", "fadeIn"],
+                animationOut: ["animated", "fadeOut"],
+                dismiss: {
+                  duration: 1000,
+                  onScreen: true
+                }
+            })
+        }else{
         /** getting current state */
         const columns = [...this.state.columns]   
+
         /** new arrays to store filtered results*/
         var newTasks = []
         var newColumns = []
@@ -188,6 +227,7 @@ class Board extends Component {
                    newTasks.push(task)
                 }
             })
+
             /** with new tasks create new column */
             if( newTasks.length > 0)
             {
@@ -195,12 +235,46 @@ class Board extends Component {
                     colID: col.colID,
                     tasks: newTasks
                 }
+
                 /** store new column in new array */
                 newColumns.push(newCol)
             }         
         })
-        /** updating the state with new filtered columns and it's tasks */
-        this.setState({ columns: newColumns})
+           if(newColumns.length > 0){
+            /** updating the state with new filtered columns and it's tasks */
+            this.setState({ columns: newColumns})
+
+             /**  successful search notification */
+            store.addNotification({
+                title: "Successfull!",
+                message: "Data Found",
+                type: "success",
+                insert: "center",
+                container: "center",
+                animationIn: ["animated", "fadeIn"],
+                animationOut: ["animated", "fadeOut"],
+                dismiss: {
+                  duration: 1000,
+                  onScreen: true
+                }
+            })
+            }else{
+                /**no search data found  notification */
+                store.addNotification({
+                    title: "No data found!",
+                    message: "Try Again",
+                    type: "danger",
+                    insert: "center",
+                    container: "center",
+                    animationIn: ["animated", "fadeIn"],
+                    animationOut: ["animated", "fadeOut"],
+                    dismiss: {
+                      duration: 1000,
+                      onScreen: true
+                    }
+                })
+            }
+        }        
     }
 
     render () {
@@ -209,12 +283,13 @@ class Board extends Component {
         return (
             <div  className={style.Container}>
                 <Header search={this.searchHandler}/>
+
                  {/* render modal of is task is being edited */}
                 {
                     isEdit  && <Modal 
                                 show={isEdit}
                                 toggleShow={this.toggleDrawer}
-                                task={editTask}
+                                taskToBeEdit={editTask}
                                 updateTask={this.updateTaskHandler}
                             />
                 }
@@ -222,6 +297,7 @@ class Board extends Component {
                 <Button size="medium"  variant="contained" color="primary" onClick={this.addList}> 
                   <AddCircleOutlineIcon/> {NEW_LIST}
                 </Button>
+                
                 {/* rendering columns */}
                 <div className={style.Board}>
                 {

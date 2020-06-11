@@ -12,7 +12,9 @@ class TaskForm extends Component {
     /** function after form is submitted, creatng new task */
     submitHandler = (e) => {
         e.preventDefault()
+        
         const value= this.state.title
+
         /** if title is added then create new task */
         if(value !== ''){
          this.setState({title: '', error: false})

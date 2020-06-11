@@ -14,15 +14,16 @@ class Register extends Component {
             comments: '',
         }
     componentDidMount = () => {
-        const { task } =  this.props
+        const { taskEdit } =  this.props
         this.setState({
-            title: task[0].title,
-            priority: task[0].priority,
-            estimate: task[0].estimate,
-            status: task[0].status,
-            comments: task[0].comments
+            title: taskEdit.title,
+            priority: taskEdit.priority,
+            estimate: taskEdit.estimate,
+            status: taskEdit.status,
+            comments: taskEdit.comments
         })
     }
+   
     /** function set state with user input values */
     handleChange = (e) => {
         this.setState({
@@ -35,6 +36,7 @@ class Register extends Component {
       e.preventDefault()
       /** create new task with properties */
       const task = {
+        id: this.props.taskEdit.id,
         title: this.state.title,
         priority: this.state.priority,
         estimate: this.state.estimate,

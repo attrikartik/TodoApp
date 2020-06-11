@@ -18,6 +18,7 @@ const TaskCard =(props)=> {
   const [colId, setColId] = useState(null)
   const [tasks,setTasks] = useState([])
   const [showModal,setShowModal] = useState(false)
+  
   /** hook with its dependencies for setting state  */
   useEffect(() => {
     setColId(props.colId)

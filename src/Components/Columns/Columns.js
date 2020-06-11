@@ -1,36 +1,42 @@
 import React, { Component } from 'react'
 import TaskCard from '../TaskCard/TaskCard'
-/** claas Column 
+/** class Column 
  *  it displays current column with tasks (also kanban view)
  */
 class Columns extends Component {
-
-    state = {
-       startCol: null,
-       dropCol: null,
-       dragOver: null
-    }
-
+    /** when user start column drag */
     onDragStart = ( e, colID) => {
+        /** getting index of dragged column */
         const idx = this.props.columns.findIndex(col=> col.colID === colID)
+        
+        /** setting data of dragged column in event  */
         e.dataTransfer.setData('colIdx', idx)
     }
+    /** dragging over the column */
     onDragOver = (e) => {
         e.preventDefault();
     }
     onDragEnter = ( e, colID) => {
-        this.setState({ dragOver: colID})
+        e.preventDefault()
     }
+    /** when column is droppped after drag */
     OnDrop = (e,colID) => {
+        /** get current state of columns */
         const cols = [ ...this.props.columns]
+        
+        /** getting index of dragged columns*/
         const droppedColIdx = cols.findIndex(col=> col.colID === colID)
+        
+        /** get data of dragged column from event */
         const draggedColIdx = e.dataTransfer.getData("colIdx");
-        const tempCols = [...cols];
-    
+        const tempCols = [...cols]
+
+        /*** swapping / updating columns */
         tempCols[draggedColIdx] = cols[droppedColIdx];
         tempCols[droppedColIdx] = cols[draggedColIdx];
+        
+        /** updating state with new columns*/
         this.props.setCols(tempCols)
-        this.setState({ dragOver: ''})
     }
     render(){
         const { colID, tasks, handleTitle,handleEdit,deleteColumn,deleteTaskHandle } = {...this.props}

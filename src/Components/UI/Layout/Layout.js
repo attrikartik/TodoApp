@@ -6,7 +6,7 @@ import Board from '../../../Containers/Board/Board'
  *  @Board Component
  */
 
-const Layout = () => {
+const Layout = (props) => {
       return(
        <div>
         <Board/>

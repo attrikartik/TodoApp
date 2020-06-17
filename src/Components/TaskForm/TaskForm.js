@@ -1,6 +1,8 @@
 import React, {Component} from 'react'
 import TextField from '@material-ui/core/TextField';
 import {ERROR_TASK} from '../../Constants/Constants'
+import {Draggable} from 'react-beautiful-dnd';
+
 /** class TaskForm 
  *  which renders form with single input to create new task
  */
@@ -26,17 +28,30 @@ class TaskForm extends Component {
         }
     }
     render() {
-        return(
-            <form onSubmit={this.submitHandler}>
-                <TextField id={Math.random().toString()}
-                  label="Add Task" color="secondary"
-                  onChange={(e)=>this.setState({title: e.target.value})}
-                  value={this.state.title}
-                />
-                {/* if error hen display it */}
-                { this.state.error && <p style={{color:'red'}}>{ERROR_TASK}</p>}
-            </form>        
-        )
+        return (
+            <Draggable draggableId={this.props.id.toString()} index={5}>
+              {(provided) => (
+                 
+                <div
+                    {...provided.draggableProps}
+                    ref={provided.innerRef}
+                >
+                    <form onSubmit={this.submitHandler}>
+                          <TextField id={Math.random().toString()}
+                            label="Add Task" color="secondary"
+                            onChange={(e)=>this.setState({title: e.target.value})}
+                            value={this.state.title}
+                          />
+                          {/* if error hen display it */}
+                          { this.state.error && <p style={{color:'red'}}>{ERROR_TASK}</p>}
+                    </form>           
+                </div>
+                 
+              )}
+           
+            </Draggable>
+             
+          )
     }
 }
 

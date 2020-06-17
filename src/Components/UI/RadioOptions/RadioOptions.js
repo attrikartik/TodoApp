@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Button, ButtonGroup } from 'reactstrap';
 
 /** class RadioOptions 
- *  it renders option to users 
+ *  it renders option to users
  */
 class RadioOptions extends Component {
 
@@ -11,9 +11,9 @@ class RadioOptions extends Component {
     }
 
     render() {
-        const buts =  this.props.options.map((option,index)=>{
+        const buttons =  this.props.options.map((option,index)=>{
                         if(option === this.props.value){
-                          return   <Button style={{margin:'3px'}}key={index} color="secondary" onClick={() =>this.handleSelect(option)}>{option}</Button>
+                          return   <Button style={{margin:'3px'}}key={index} style={{backgroundColor:'green'}} onClick={() =>this.handleSelect(option)}>{option}</Button>
 
                         }
                         return <Button style={{margin:'3px'}}key={index} color="primary" onClick={() =>this.handleSelect(option)}>{option}</Button>
@@ -21,7 +21,7 @@ class RadioOptions extends Component {
     return(
         <div>
             <ButtonGroup>
-             {buts}
+             {buttons}
             </ButtonGroup>    
         </div>
         )

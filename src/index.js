@@ -4,15 +4,17 @@ import './index.css';
 import App from './App';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
 import 'react-notifications-component/dist/theme.css'
-
+import thunk from 'redux-thunk'
+import { Provider } from 'react-redux'
+import Reducer from '../src/store/reducers/reducers'
+import { createStore, applyMiddleware,compose} from 'redux'
 import * as serviceWorker from './serviceWorker';
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+const composeEnhancers =  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const store = createStore(Reducer,composeEnhancers(applyMiddleware(thunk)));
+
+ReactDOM.render(<Provider store={store}><App /></Provider>, document.getElementById('root'));
+
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

@@ -13,7 +13,7 @@ class RadioOptions extends Component {
     render() {
         const buts =  this.props.options.map((option,index)=>{
                         if(option === this.props.value){
-                          return   <Button style={{margin:'3px'}}key={index} color="secondary" onClick={() =>this.handleSelect(option)}>{option}</Button>
+                          return   <Button style={{margin:'3px', backgroundColor:'green'}}key={index} onClick={() =>this.handleSelect(option)}>{option}</Button>
 
                         }
                         return <Button style={{margin:'3px'}}key={index} color="primary" onClick={() =>this.handleSelect(option)}>{option}</Button>

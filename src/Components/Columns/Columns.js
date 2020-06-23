@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
 import TaskCard from '../TaskCard/TaskCard'
+import {connect} from 'react-redux'
+import { setLists } from '../../store/actions/actions'
 /** class Column 
  *  it displays current column with tasks (also kanban view)
  */
 class Columns extends Component {
-    /** when user start column drag */
-    onDragStart = ( e, colID) => {
+     /** when user start column drag */
+     onDragStart = ( e, colID) => {
         /** getting index of dragged column */
         const idx = this.props.columns.findIndex(col=> col.colID === colID)
         
@@ -36,10 +38,10 @@ class Columns extends Component {
         tempCols[droppedColIdx] = cols[draggedColIdx];
         
         /** updating state with new columns*/
-        this.props.setCols(tempCols)
+        this.props.setNewLists(tempCols)
     }
     render(){
-        const { colID, tasks, handleTitle,handleEdit,deleteColumn,deleteTaskHandle } = {...this.props}
+        const { colID, tasks, title } = {...this.props}
         return(
             <div
               draggable 
@@ -52,14 +54,16 @@ class Columns extends Component {
             <TaskCard 
                 colId={colID}
                 tasks={tasks}
-                title={(colId,value)=> handleTitle (colId,value)}
-                edit={(id)=>handleEdit(id,colID)}
-                deleteCol={()=>deleteColumn(colID)}
-                taskDelete={(taskID)=>deleteTaskHandle(taskID,colID)}
+                titleCol={title}
             />
             </div>
         )
     }
 }
 
-export default Columns
+const mapDispatchToProps = dispatch =>{
+    return{
+        setNewLists: (lists) => dispatch(setLists(lists))
+    }
+}
+export default connect(null,mapDispatchToProps)(Columns)

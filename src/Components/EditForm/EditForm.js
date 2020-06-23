@@ -4,7 +4,7 @@ import RadioOptions from '../UI/RadioOptions/RadioOptions'
 import TextField from '@material-ui/core/TextField'
 import  { EDIT_TASK, ESTIMATE, CANCEL,
           UPDATE, COMMENTS, PRIORITY_OPTIONS,
-          STATUS_OPTIONS, SET_PRIORITY, SET_STATUS } from '../../Constants/Constants'
+          STATUS_OPTIONS, SET_PRIORITY, SET_STATUS, ESTIMATE_PLACEHOLDER } from '../../Constants/Constants'
 
 /** class EditForm
  *  which displays form to user with task properties
@@ -19,14 +19,14 @@ class EditForm extends Component {
             comments: '',
         }
     componentDidMount = () => {
-        const { taskEdit } =  this.props
+        const { taskToBeEdit } =  this.props
         /** setting state with incoming task properties */
         this.setState({
-            title: taskEdit.title,
-            priority: taskEdit.priority,
-            estimate: taskEdit.estimate,
-            status: taskEdit.status,
-            comments: taskEdit.comments
+            title: taskToBeEdit.title,
+            priority: taskToBeEdit.priority,
+            estimate: taskToBeEdit.estimate,
+            status: taskToBeEdit.status,
+            comments: taskToBeEdit.comments
         })
     }
    
@@ -42,7 +42,7 @@ class EditForm extends Component {
       e.preventDefault()
       /** create new task with properties */
       const task = {
-        id: this.props.taskEdit.id,
+        id: this.props.taskToBeEdit.id,
         title: this.state.title,
         priority: this.state.priority,
         estimate: this.state.estimate,
@@ -50,7 +50,7 @@ class EditForm extends Component {
         comments: this.state.comments
       }
       /** update the task */
-      this.props.update(task)
+       this.props.updateTask(task)
     }
     
     /** function to set priority and status of task */
@@ -72,7 +72,7 @@ class EditForm extends Component {
               comments: ''
         })
         /** toggle the side drawer */
-        this.props.toggle()
+        this.props.toggleShow()
     }
     render() {
         const {title,priority,status,estimate,comments} = this.state
@@ -82,7 +82,7 @@ class EditForm extends Component {
                 <h3>
                 <TextField id={Math.random().toString()}
                   name='title'
-                  label="Edit Task Label" color="secondary"
+                  label="Edit Task Label"
                   onChange={this.handleChange}
                   value={title}
                 /></h3>
@@ -99,7 +99,7 @@ class EditForm extends Component {
 
                 <FormGroup>
                     <Label for="estimate" style={{color:'#1B88BE'}}>{ESTIMATE}</Label>
-                    <Input type='number' id="estimate" value={estimate} name="estimate" onChange={this.handleChange} />
+                    <Input type='number' id="estimate" value={estimate} name="estimate" onChange={this.handleChange} placeholder={ESTIMATE_PLACEHOLDER}/>
                 </FormGroup>
 
                 <FormGroup>

@@ -1,9 +1,12 @@
 import React, {Component} from 'react'
-import TextField from '@material-ui/core/TextField';
-import {ERROR_TASK} from '../../Constants/Constants'
+import TextField from '@material-ui/core/TextField'
+import Notification from '../UI/Notificaion/Notification'
 /** class TaskForm 
  *  which renders form with single input to create new task
  */
+
+Notification('Enter Valid Value!','Empty Field', 'danger')
+
 class TaskForm extends Component {
     state = {
         title:'',
@@ -22,19 +25,17 @@ class TaskForm extends Component {
         }
         /** else throw error */
         else{
-            this.setState({error: true})
+            Notification('Enter Valid Value!','Empty Field', 'danger')
         }
     }
     render() {
         return(
             <form onSubmit={this.submitHandler}>
                 <TextField id={Math.random().toString()}
-                  label="Add Task" color="secondary"
+                  label="Add Task"
                   onChange={(e)=>this.setState({title: e.target.value})}
                   value={this.state.title}
                 />
-                {/* if error hen display it */}
-                { this.state.error && <p style={{color:'red'}}>{ERROR_TASK}</p>}
             </form>        
         )
     }

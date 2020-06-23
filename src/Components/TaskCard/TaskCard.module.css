@@ -1,0 +1,8 @@
+.root{
+    max-width: 345;
+    border: 1px solid coral;
+    margin-right: 5px;
+    margin-left: 5px;
+    margin-top: 10px;
+    box-shadow: 1px darkcyan;
+}

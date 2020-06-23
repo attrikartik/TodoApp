@@ -1,6 +1,5 @@
 import React from 'react';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
-import EditForm from '../../EditForm/EditForm'
 
 /** sideDrawer component 
  *  where form is displayed to users for editing tasks properties
@@ -15,21 +14,19 @@ export default function SwipeableTemporaryDrawer(props) {
       return;
     }
     setShow(open)
-    props.toggleShow()
   };
   return (
     <div>
         <React.Fragment key={'right'}>
           <SwipeableDrawer
             anchor='right'
-            open={state['right']}
+            open={state.right}
             onClose={toggleDrawer(false)}
             onOpen={toggleDrawer(true)}
           >
-           <EditForm taskEdit={props.taskToBeEdit} update={props.updateTask} toggle={props.toggleShow}/>
+           {props.children}
           </SwipeableDrawer>
-        </React.Fragment>
-      
+        </React.Fragment>      
     </div>
   );
 }

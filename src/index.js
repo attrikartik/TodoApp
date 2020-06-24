@@ -9,9 +9,17 @@ import { Provider } from 'react-redux'
 import Reducer from '../src/store/reducers/reducers'
 import { createStore, applyMiddleware,compose} from 'redux'
 import * as serviceWorker from './serviceWorker';
+import createSagaMiddleWare from 'redux-saga'
+import {watchAll} from './sagas/index'
 
 const composeEnhancers =  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const store = createStore(Reducer,composeEnhancers(applyMiddleware(thunk)));
+
+const sagaMiddleware = createSagaMiddleWare()
+
+const store = createStore(Reducer,composeEnhancers(applyMiddleware(thunk,sagaMiddleware)))
+
+sagaMiddleware.run(watchAll)
+
 
 ReactDOM.render(<Provider store={store}><App /></Provider>, document.getElementById('root'));
 

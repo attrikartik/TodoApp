@@ -11,3 +11,13 @@ export const HANDLE_EDIT = 'HANDLE_EDIT'
 export const SEARCH = 'SEARCH'
 export const CANCEL_EDIT = 'CANCEL_EDIT'
 export const SET_COL_TITLE = 'SET_COL_TITLE'
+
+
+export const FETCH_LISTS_SAGA = 'FETCH_LISTS_SAGA'
+export const SET_COL_TITLE_SAGA = 'SET_COL_TITLE_SAGA'
+export const DELETE_COLUMN_SAGA = 'DELETE_COLUMN_SAGA'
+export const ADD_TASK_SAGA = 'ADD_TASK_SAGA'
+export const EDIT_TASK_SAGA = 'EDIT_TASK_SAGA'
+export const DELETE_TASK_SAGA = 'DELETE_TASK_SAGA'
+
+
